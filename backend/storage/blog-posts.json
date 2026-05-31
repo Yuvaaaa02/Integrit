@@ -1,0 +1,59 @@
+[
+  {
+    "id": "95d74a78-2941-42b8-beca-f21eaf1e7546",
+    "slug": "agentic-ai-2026",
+    "title": "The Agentic AI Stack in 2026",
+    "excerpt": "What every founder needs to know about autonomous workflows that actually ship revenue.",
+    "content": "<p>In 2026, agentic AI isn't a demo — it's a line item on the P&amp;L. The teams winning right now share three traits...</p><h2>1. They own their workflows</h2><p>Off-the-shelf agents are a starting point. The compounding edge comes from custom orchestration.</p><h2>2. They measure outcomes, not tokens</h2><p>Cost per booked meeting. Cost per closed deal. Tokens are infrastructure, not strategy.</p><h2>3. They invest in evaluation</h2><p>Without evals, you're flying blind. The best teams ship evals before they ship features.</p>",
+    "date": "May 12, 2026",
+    "author": "Integrit Team",
+    "readTime": "6 min",
+    "tags": [
+      "AI",
+      "Strategy"
+    ],
+    "thumbnail": "grad-1",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.954Z",
+    "updatedAt": "2026-05-30T09:22:55.240Z",
+    "deletedAt": "2026-05-30T09:22:55.240Z"
+  },
+  {
+    "id": "3a4b32f5-a90f-4a1a-8f57-d726ece7d779",
+    "slug": "viral-loops-playbook",
+    "title": "The Viral Loops Playbook",
+    "excerpt": "Five mechanics behind every product that grew without paid acquisition.",
+    "content": "<p>Virality isn't luck. It's a small set of loops, engineered.</p><h2>Loop 1: Invite</h2><p>Built into the core action.</p><h2>Loop 2: Content</h2><p>Every user creates artifacts that pull in new users.</p>",
+    "date": "April 28, 2026",
+    "author": "Maya Patel",
+    "readTime": "8 min",
+    "tags": [
+      "Growth",
+      "Product"
+    ],
+    "thumbnail": "grad-2",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.954Z",
+    "updatedAt": "2026-05-30T09:22:57.431Z",
+    "deletedAt": "2026-05-30T09:22:57.431Z"
+  },
+  {
+    "id": "21c3f497-269e-414a-a221-064b043fe938",
+    "slug": "rag-vs-fine-tuning",
+    "title": "RAG vs Fine-Tuning: A Practical Decision Tree",
+    "excerpt": "When to retrieve, when to train, and when to do both.",
+    "content": "<p>The short answer: start with RAG. The long answer is more interesting.</p><h2>RAG when...</h2><p>Knowledge changes daily, sources are structured, latency budget is forgiving.</p><h2>Fine-tune when...</h2><p>Style and format matter more than facts. Or when latency is tight.</p>",
+    "date": "April 14, 2026",
+    "author": "Daniel Chen",
+    "readTime": "5 min",
+    "tags": [
+      "AI",
+      "Engineering"
+    ],
+    "thumbnail": "grad-3",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.954Z",
+    "updatedAt": "2026-05-30T09:22:59.417Z",
+    "deletedAt": "2026-05-30T09:22:59.417Z"
+  }
+]

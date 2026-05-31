@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ce7dfb61-818c-40e5-a138-0619c23e7975",
+    "type": "summary",
+    "totalUsers": 1,
+    "totalOrders": 9,
+    "totalRevenue": 50073,
+    "totalInquiries": 0,
+    "loginAttempts": 0,
+    "paymentAttempts": 0,
+    "apiCalls": 1450,
+    "createdAt": "2026-05-30T06:16:20.974Z",
+    "updatedAt": "2026-05-31T08:30:26.661Z",
+    "deletedAt": null
+  }
+]

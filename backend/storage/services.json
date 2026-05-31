@@ -1,0 +1,293 @@
+[
+  {
+    "id": "d4a5ea5d-9acf-46b1-b4b6-9b413db2e5e6",
+    "slug": "instagram-growth",
+    "title": "Instagram Growth",
+    "icon": "📸",
+    "description": "Organic reach engineered for the algorithm.",
+    "packages": [
+      {
+        "name": "Starter",
+        "price": 799,
+        "duration": "Monthly",
+        "deliverables": [
+          "12 posts",
+          "30 stories",
+          "Hashtag strategy"
+        ]
+      },
+      {
+        "name": "Growth",
+        "price": 1499,
+        "duration": "Monthly",
+        "deliverables": [
+          "20 posts",
+          "60 stories",
+          "8 reels",
+          "DM management"
+        ]
+      },
+      {
+        "name": "Scale",
+        "price": 2999,
+        "duration": "Monthly",
+        "deliverables": [
+          "Daily content",
+          "15 reels",
+          "Paid amplification",
+          "Dedicated manager"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:29.379Z",
+    "deletedAt": "2026-05-30T06:41:29.379Z"
+  },
+  {
+    "id": "2c4ad143-bd56-446a-a4ef-968057891eca",
+    "slug": "youtube-automation",
+    "title": "YouTube Automation",
+    "icon": "▶️",
+    "description": "Long-form content engine with AI-assisted production.",
+    "packages": [
+      {
+        "name": "Starter",
+        "price": 1499,
+        "duration": "Monthly",
+        "deliverables": [
+          "4 videos",
+          "Thumbnails",
+          "SEO"
+        ]
+      },
+      {
+        "name": "Growth",
+        "price": 2999,
+        "duration": "Monthly",
+        "deliverables": [
+          "8 videos",
+          "Shorts repurposing",
+          "Analytics"
+        ]
+      },
+      {
+        "name": "Scale",
+        "price": 4999,
+        "duration": "Monthly",
+        "deliverables": [
+          "12 videos",
+          "Channel strategy",
+          "Sponsorship outreach"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:33.759Z",
+    "deletedAt": "2026-05-30T06:41:33.759Z"
+  },
+  {
+    "id": "49b6dcbd-0faa-45ee-a796-e132af8ec74d",
+    "slug": "seo-optimization",
+    "title": "SEO Optimization",
+    "icon": "🔍",
+    "description": "Technical + content SEO that compounds.",
+    "packages": [
+      {
+        "name": "Audit",
+        "price": 499,
+        "duration": "One-time",
+        "deliverables": [
+          "Full site audit",
+          "Action plan"
+        ]
+      },
+      {
+        "name": "Ongoing",
+        "price": 1999,
+        "duration": "Monthly",
+        "deliverables": [
+          "8 articles",
+          "Backlinks",
+          "Reporting"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "price": 4999,
+        "duration": "Monthly",
+        "deliverables": [
+          "20 articles",
+          "Programmatic SEO",
+          "Dedicated strategist"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:31.622Z",
+    "deletedAt": "2026-05-30T06:41:31.622Z"
+  },
+  {
+    "id": "1bcf00c3-ab20-45cc-8320-524245e38001",
+    "slug": "paid-ads",
+    "title": "Paid Ads",
+    "icon": "🎯",
+    "description": "Meta + Google + TikTok ads that scale profitably.",
+    "packages": [
+      {
+        "name": "Launch",
+        "price": 999,
+        "duration": "Monthly",
+        "deliverables": [
+          "Creative + setup",
+          "1 channel"
+        ]
+      },
+      {
+        "name": "Multi-channel",
+        "price": 2499,
+        "duration": "Monthly",
+        "deliverables": [
+          "3 channels",
+          "Creative rotation",
+          "Weekly review"
+        ]
+      },
+      {
+        "name": "Performance",
+        "price": 4999,
+        "duration": "Monthly + 5% spend",
+        "deliverables": [
+          "All channels",
+          "CRO",
+          "Attribution"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:37.396Z",
+    "deletedAt": "2026-05-30T06:41:37.396Z"
+  },
+  {
+    "id": "8f1fe760-3723-4cde-aa6c-5ffa635feba3",
+    "slug": "ai-content-creation",
+    "title": "AI Content Creation",
+    "icon": "✨",
+    "description": "Branded content at machine speed.",
+    "packages": [
+      {
+        "name": "Basic",
+        "price": 599,
+        "duration": "Monthly",
+        "deliverables": [
+          "20 graphics",
+          "10 captions"
+        ]
+      },
+      {
+        "name": "Pro",
+        "price": 1299,
+        "duration": "Monthly",
+        "deliverables": [
+          "50 assets",
+          "Brand voice training"
+        ]
+      },
+      {
+        "name": "Studio",
+        "price": 2999,
+        "duration": "Monthly",
+        "deliverables": [
+          "Unlimited",
+          "Video AI",
+          "Dedicated creator"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:35.446Z",
+    "deletedAt": "2026-05-30T06:41:35.446Z"
+  },
+  {
+    "id": "15ce6643-7277-4942-9080-52ba608f41a0",
+    "slug": "branding",
+    "title": "Branding",
+    "icon": "🎨",
+    "description": "Identity systems for ambitious companies.",
+    "packages": [
+      {
+        "name": "Logo",
+        "price": 1499,
+        "duration": "2 weeks",
+        "deliverables": [
+          "Logo system",
+          "Type",
+          "Color"
+        ]
+      },
+      {
+        "name": "Identity",
+        "price": 4999,
+        "duration": "4 weeks",
+        "deliverables": [
+          "Full brand",
+          "Guidelines",
+          "Templates"
+        ]
+      },
+      {
+        "name": "System",
+        "price": 9999,
+        "duration": "8 weeks",
+        "deliverables": [
+          "Brand + web",
+          "Motion",
+          "Launch kit"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:38.896Z",
+    "deletedAt": "2026-05-30T06:41:38.896Z"
+  },
+  {
+    "id": "bad58613-891f-4c97-9866-255651a2ffb9",
+    "slug": "funnel-creation",
+    "title": "Funnel Creation",
+    "icon": "🚀",
+    "description": "Conversion-engineered funnels from ad to upsell.",
+    "packages": [
+      {
+        "name": "Single",
+        "price": 1999,
+        "duration": "2 weeks",
+        "deliverables": [
+          "Landing page",
+          "Email seq"
+        ]
+      },
+      {
+        "name": "Full funnel",
+        "price": 4999,
+        "duration": "4 weeks",
+        "deliverables": [
+          "Multi-step",
+          "CRM",
+          "Tracking"
+        ]
+      },
+      {
+        "name": "Empire",
+        "price": 9999,
+        "duration": "8 weeks",
+        "deliverables": [
+          "Webinar + upsells",
+          "Affiliate",
+          "Optimization"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-30T06:16:20.950Z",
+    "updatedAt": "2026-05-30T06:41:41.424Z",
+    "deletedAt": "2026-05-30T06:41:41.424Z"
+  }
+]

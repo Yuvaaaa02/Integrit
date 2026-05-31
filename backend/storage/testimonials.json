@@ -1,0 +1,57 @@
+[
+  {
+    "id": "f072741e-b689-4feb-9406-e30d164c6427",
+    "name": "Maya Patel",
+    "role": "Founder",
+    "company": "Northwind AI",
+    "rating": 5,
+    "content": "Integrit's Autopilot SDR booked 47 qualified meetings in our first month. Pure ROI.",
+    "createdAt": "2026-05-30T06:16:20.958Z",
+    "updatedAt": "2026-05-30T06:41:53.935Z",
+    "deletedAt": "2026-05-30T06:41:53.935Z"
+  },
+  {
+    "id": "6dac230e-4155-40f4-8b1c-66051f6b5afc",
+    "name": "James Okafor",
+    "role": "Head of Growth",
+    "company": "Lumen Studio",
+    "rating": 5,
+    "content": "The Reels Engine 10x'd our reach. We finally have a content moat.",
+    "createdAt": "2026-05-30T06:16:20.958Z",
+    "updatedAt": "2026-05-30T06:16:20.958Z",
+    "deletedAt": null
+  },
+  {
+    "id": "275f90aa-affb-455d-bc2f-2d06a3ffb910",
+    "name": "Sofia Reyes",
+    "role": "CMO",
+    "company": "Drift Commerce",
+    "rating": 5,
+    "content": "Shopify Upsell AI added $84k in incremental revenue in 60 days. Stupid simple.",
+    "createdAt": "2026-05-30T06:16:20.958Z",
+    "updatedAt": "2026-05-30T06:16:20.958Z",
+    "deletedAt": null
+  },
+  {
+    "id": "3d755a0a-f48a-47fd-bffc-7fa9667291e1",
+    "name": "Daniel Chen",
+    "role": "CEO",
+    "company": "Helix Health",
+    "rating": 5,
+    "content": "Their LinkedIn system turned our cold pipeline into a warm inbound machine.",
+    "createdAt": "2026-05-30T06:16:20.958Z",
+    "updatedAt": "2026-05-30T06:16:20.958Z",
+    "deletedAt": null
+  },
+  {
+    "id": "5089c23e-03b9-4982-be1b-dad7b6f55669",
+    "name": "Aisha Bello",
+    "role": "Operations Lead",
+    "company": "Mira Labs",
+    "rating": 5,
+    "content": "Best agency-meets-product team we've worked with. Polished, fast, no fluff.",
+    "createdAt": "2026-05-30T06:16:20.958Z",
+    "updatedAt": "2026-05-30T06:16:20.958Z",
+    "deletedAt": null
+  }
+]

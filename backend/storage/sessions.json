@@ -1,0 +1,65 @@
+[
+  {
+    "id": "fdf5bc53-f893-4d4f-9648-9f761a75232d",
+    "userId": "8273a4f5-c71f-40ee-8ca5-4f9ca3a9cb9d",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgyNzNhNGY1LWM3MWYtNDBlZS04Y2E1LTRmOWNhM2E5Y2I5ZCIsImlhdCI6MTc4MDEyMzI2MCwiZXhwIjoxNzgwNzI4MDYwfQ.W6epWMlVdBY4k_6mGNWz68XQQ2bYn4_4OEaNn_hy4zo",
+    "expiresAt": "2026-06-06T06:41:00.651Z",
+    "createdAt": "2026-05-30T06:41:00.652Z",
+    "updatedAt": "2026-05-30T06:41:00.652Z",
+    "deletedAt": null
+  },
+  {
+    "id": "20d4cd8c-0ac6-4d73-88ac-96faf2aec6bf",
+    "userId": "8273a4f5-c71f-40ee-8ca5-4f9ca3a9cb9d",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgyNzNhNGY1LWM3MWYtNDBlZS04Y2E1LTRmOWNhM2E5Y2I5ZCIsImlhdCI6MTc4MDEyNDU3OCwiZXhwIjoxNzgwNzI5Mzc4fQ.aBLw06dnPWQ4L2c6SbgVONxEsB8bPg--Dsf1DL2z3rY",
+    "expiresAt": "2026-06-06T07:02:58.616Z",
+    "createdAt": "2026-05-30T07:02:58.617Z",
+    "updatedAt": "2026-05-30T07:02:58.617Z",
+    "deletedAt": null
+  },
+  {
+    "id": "f1a83b82-f7e3-4577-8e96-4c6daea9acd6",
+    "userId": "8273a4f5-c71f-40ee-8ca5-4f9ca3a9cb9d",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgyNzNhNGY1LWM3MWYtNDBlZS04Y2E1LTRmOWNhM2E5Y2I5ZCIsImlhdCI6MTc4MDEyNTIzOCwiZXhwIjoxNzgwNzMwMDM4fQ.xFWoIZl4drgBE-bFXc5v_jwfd91qjy3myoruiC6vEJ0",
+    "expiresAt": "2026-06-06T07:13:58.274Z",
+    "createdAt": "2026-05-30T07:13:58.274Z",
+    "updatedAt": "2026-05-30T07:13:58.274Z",
+    "deletedAt": null
+  },
+  {
+    "id": "63d5df69-866e-469a-9a29-0d630cede07a",
+    "userId": "8273a4f5-c71f-40ee-8ca5-4f9ca3a9cb9d",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgyNzNhNGY1LWM3MWYtNDBlZS04Y2E1LTRmOWNhM2E5Y2I5ZCIsImlhdCI6MTc4MDEyNTQ1NywiZXhwIjoxNzgwNzMwMjU3fQ.fx-6rdj6GpLhRYOnWU2EUpVrktjB_PONtfF3xrKgOlg",
+    "expiresAt": "2026-06-06T07:17:37.019Z",
+    "createdAt": "2026-05-30T07:17:37.020Z",
+    "updatedAt": "2026-05-30T07:17:37.020Z",
+    "deletedAt": null
+  },
+  {
+    "id": "d1c50ee3-1e2d-46fb-ab27-8e6f9beacce3",
+    "userId": "admin_001",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluXzAwMSIsImlhdCI6MTc4MDEzMzY1NSwiZXhwIjoxNzgwNzM4NDU1fQ.F1-gL-w1fCXtd0k7VTSHHZBR0UFw0UWt67styA1OuwU",
+    "expiresAt": "2026-06-06T09:34:15.574Z",
+    "createdAt": "2026-05-30T09:34:15.575Z",
+    "updatedAt": "2026-05-30T09:34:15.575Z",
+    "deletedAt": null
+  },
+  {
+    "id": "785c28cb-1d12-4a71-8e16-7c1347b303c1",
+    "userId": "admin_001",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluXzAwMSIsImlhdCI6MTc4MDEzMzg3OSwiZXhwIjoxNzgwNzM4Njc5fQ.VD-D-xRz40eZ1fQ5tpiRxb1ubbGz-z4VjsC_R049O6w",
+    "expiresAt": "2026-06-06T09:37:59.444Z",
+    "createdAt": "2026-05-30T09:37:59.445Z",
+    "updatedAt": "2026-05-30T09:37:59.445Z",
+    "deletedAt": null
+  },
+  {
+    "id": "93b4ffa6-08df-4439-b10c-9ddb720d7944",
+    "userId": "admin_001",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluXzAwMSIsImlhdCI6MTc4MDIxMzU0MSwiZXhwIjoxNzgwODE4MzQxfQ.1vrt6TZmKR7Y12UupKZb-bGiFC1P22_P9g0g4Fmvoyk",
+    "expiresAt": "2026-06-07T07:45:41.471Z",
+    "createdAt": "2026-05-31T07:45:41.472Z",
+    "updatedAt": "2026-05-31T07:45:41.472Z",
+    "deletedAt": null
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "46d3c9f3-3ce5-45f2-9fb1-69e60177047c",
+    "name": "Olivia Park",
+    "email": "olivia@apex.io",
+    "phone": "",
+    "type": "consultation",
+    "message": "Looking to build a custom sales agent for our outbound team.",
+    "date": "2026-05-29",
+    "read": true,
+    "createdAt": "2026-05-30T06:16:20.968Z",
+    "updatedAt": "2026-05-30T08:29:18.832Z",
+    "deletedAt": "2026-05-30T08:29:18.832Z"
+  },
+  {
+    "id": "64320318-663d-410e-99c8-40edc3c7d693",
+    "name": "Marcus Lee",
+    "email": "m.lee@drift.com",
+    "phone": "",
+    "type": "inquiry",
+    "message": "What's pricing for the YouTube automation package at scale?",
+    "date": "2026-05-28",
+    "read": true,
+    "createdAt": "2026-05-30T06:16:20.968Z",
+    "updatedAt": "2026-05-31T07:02:02.472Z",
+    "deletedAt": "2026-05-31T07:02:02.472Z"
+  },
+  {
+    "id": "e05f1617-e439-4635-b2fa-fa08ae099992",
+    "name": "Priya Nair",
+    "email": "priya@helix.health",
+    "phone": "",
+    "type": "consultation",
+    "message": "Need a LinkedIn ghostwriting system for 3 execs.",
+    "date": "2026-05-27",
+    "read": true,
+    "createdAt": "2026-05-30T06:16:20.968Z",
+    "updatedAt": "2026-05-31T07:02:03.544Z",
+    "deletedAt": "2026-05-31T07:02:03.544Z"
+  },
+  {
+    "id": "70f7b2fa-db46-4b76-9029-93456ab4b77e",
+    "name": "Tom Becker",
+    "email": "tom@orbital.studio",
+    "phone": "",
+    "type": "inquiry",
+    "message": "Do you offer reseller pricing?",
+    "date": "2026-05-26",
+    "read": true,
+    "createdAt": "2026-05-30T06:16:20.968Z",
+    "updatedAt": "2026-05-31T07:02:03.979Z",
+    "deletedAt": "2026-05-31T07:02:03.979Z"
+  },
+  {
+    "id": "fd83b253-f978-4020-a1cf-5a6318ffb4f1",
+    "name": "Yuvaraj Gummudu",
+    "email": "yuvarajgummudu2266@gmail.com",
+    "phone": "8374840055",
+    "type": "inquiry",
+    "message": "heyy",
+    "date": "2026-05-30",
+    "read": false,
+    "createdAt": "2026-05-30T10:10:42.927Z",
+    "updatedAt": "2026-05-31T07:02:01.003Z",
+    "deletedAt": "2026-05-31T07:02:01.003Z"
+  }
+]

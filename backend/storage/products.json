@@ -1,0 +1,617 @@
+[
+  {
+    "id": "a2b66f49-febf-4da8-a700-e5ebdba62f8f",
+    "slug": "autopilot-sales-agent",
+    "title": "Autopilot Sales Agent",
+    "category": "workflow",
+    "shortDescription": "Autonomous AI SDR that books meetings 24/7.",
+    "description": "A multi-step agentic workflow that researches leads, drafts personalized outreach, follows up, and books qualified meetings directly to your calendar.",
+    "price": 299,
+    "currency": "USD",
+    "tags": [
+      "Sales",
+      "Outreach",
+      "Agentic",
+      "GPT-4"
+    ],
+    "rating": 4.9,
+    "reviewCount": 128,
+    "features": [
+      "Lead enrichment via Apollo + LinkedIn",
+      "Personalized multi-channel sequences",
+      "Auto-reply handling with intent detection",
+      "Calendar booking + CRM sync"
+    ],
+    "techStack": [
+      "OpenAI",
+      "n8n",
+      "Apollo",
+      "HubSpot",
+      "Calendly"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Discover",
+        "description": "Pull ICP-matched leads from data sources."
+      },
+      {
+        "title": "Research",
+        "description": "AI summarizes account + persona signals."
+      },
+      {
+        "title": "Engage",
+        "description": "Sends personalized email + LinkedIn touches."
+      },
+      {
+        "title": "Convert",
+        "description": "Books qualified intros to your calendar."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Does it work with my CRM?",
+        "a": "Yes — HubSpot, Salesforce, Pipedrive, Attio."
+      },
+      {
+        "q": "What's the setup time?",
+        "a": "Under 30 minutes with guided onboarding."
+      }
+    ],
+    "demoUrl": null,
+    "thumbnail": "grad-1",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:06.574Z",
+    "deletedAt": "2026-05-30T06:41:06.574Z"
+  },
+  {
+    "id": "8809d1cd-3bdf-4cbf-8836-a4151d49b1da",
+    "slug": "content-factory-pro",
+    "title": "Content Factory Pro",
+    "category": "workflow",
+    "shortDescription": "Turn one idea into 30 pieces of content automatically.",
+    "description": "End-to-end content engine: blog → tweets → reels script → newsletter → LinkedIn carousel. Publishes on autopilot.",
+    "price": 199,
+    "currency": "USD",
+    "tags": [
+      "Content",
+      "SEO",
+      "Social"
+    ],
+    "rating": 4.8,
+    "reviewCount": 94,
+    "features": [
+      "Multi-format repurposing",
+      "Brand voice training",
+      "Auto-publishing",
+      "Performance loop"
+    ],
+    "techStack": [
+      "Claude",
+      "Make.com",
+      "Buffer",
+      "Notion"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Ideate",
+        "description": "Trending topics scored for your niche."
+      },
+      {
+        "title": "Generate",
+        "description": "Draft 30 assets across 6 formats."
+      },
+      {
+        "title": "Review",
+        "description": "One-click human approval queue."
+      },
+      {
+        "title": "Publish",
+        "description": "Schedules to every channel."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Can I use my brand voice?",
+        "a": "Yes — upload samples for training."
+      }
+    ],
+    "thumbnail": "grad-2",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:08.318Z",
+    "deletedAt": "2026-05-30T06:41:08.318Z"
+  },
+  {
+    "id": "d4935d8e-536c-42c8-9097-d86c2e7275a3",
+    "slug": "slack-ai-assistant",
+    "title": "Slack AI Assistant",
+    "category": "plugin",
+    "shortDescription": "Drop-in AI teammate for your Slack workspace.",
+    "description": "Answers questions from your docs, summarizes threads, and auto-routes support tickets.",
+    "price": 79,
+    "currency": "USD",
+    "tags": [
+      "Slack",
+      "Support",
+      "RAG"
+    ],
+    "rating": 4.7,
+    "reviewCount": 211,
+    "features": [
+      "RAG over Notion/Drive",
+      "Thread summaries",
+      "Ticket triage",
+      "Multi-language"
+    ],
+    "techStack": [
+      "OpenAI",
+      "Pinecone",
+      "Slack Bolt"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Install",
+        "description": "One-click Slack install."
+      },
+      {
+        "title": "Connect",
+        "description": "Hook up Notion, Drive, Linear."
+      },
+      {
+        "title": "Ask",
+        "description": "Mention @ping in any channel."
+      },
+      {
+        "title": "Resolve",
+        "description": "Auto-creates tickets when needed."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is my data secure?",
+        "a": "All embeddings stored in your private namespace."
+      }
+    ],
+    "thumbnail": "grad-3",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:20.049Z",
+    "deletedAt": "2026-05-30T06:41:20.049Z"
+  },
+  {
+    "id": "215a6e38-6039-4895-abc7-d12d864723ce",
+    "slug": "shopify-upsell-ai",
+    "title": "Shopify Upsell AI",
+    "category": "plugin",
+    "shortDescription": "AI-driven post-purchase upsells that convert 3x.",
+    "description": "Personalized upsell offers generated per shopper based on cart, browsing history, and intent.",
+    "price": 129,
+    "currency": "USD",
+    "tags": [
+      "Shopify",
+      "Ecom",
+      "Revenue"
+    ],
+    "rating": 4.9,
+    "reviewCount": 67,
+    "features": [
+      "1-click checkout",
+      "Dynamic bundling",
+      "A/B test engine",
+      "Revenue dashboard"
+    ],
+    "techStack": [
+      "Shopify App",
+      "Vercel",
+      "OpenAI"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Install",
+        "description": "Add to your Shopify store in 2 clicks."
+      },
+      {
+        "title": "Train",
+        "description": "Learns from your catalog instantly."
+      },
+      {
+        "title": "Offer",
+        "description": "Shows the perfect upsell at checkout."
+      },
+      {
+        "title": "Earn",
+        "description": "Track lift in real time."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Does it slow checkout?",
+        "a": "No — under 80ms response time."
+      }
+    ],
+    "thumbnail": "grad-4",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:22.231Z",
+    "deletedAt": "2026-05-30T06:41:22.231Z"
+  },
+  {
+    "id": "7dd654ec-406a-45eb-bdbe-babf65729166",
+    "slug": "viral-reels-engine",
+    "title": "Viral Reels Engine",
+    "category": "social",
+    "shortDescription": "30 short-form videos a month, hands-off.",
+    "description": "Full-service reels production powered by AI scripting + human editors. Done-for-you growth.",
+    "price": 1499,
+    "currency": "USD",
+    "tags": [
+      "Reels",
+      "TikTok",
+      "Growth"
+    ],
+    "rating": 5,
+    "reviewCount": 42,
+    "features": [
+      "AI script + hook testing",
+      "Pro editor team",
+      "Trend monitoring",
+      "Analytics report"
+    ],
+    "techStack": [
+      "In-house team",
+      "Runway",
+      "CapCut"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Strategy",
+        "description": "Niche + hook research."
+      },
+      {
+        "title": "Produce",
+        "description": "30 reels delivered monthly."
+      },
+      {
+        "title": "Publish",
+        "description": "We post + caption everything."
+      },
+      {
+        "title": "Iterate",
+        "description": "Weekly performance review."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I need to be on camera?",
+        "a": "Optional — we support faceless formats too."
+      }
+    ],
+    "thumbnail": "grad-5",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:24.336Z",
+    "deletedAt": "2026-05-30T06:41:24.335Z"
+  },
+  {
+    "id": "89d6c9fa-daa4-4ca3-9674-b6be86c37bde",
+    "slug": "linkedin-authority-system",
+    "title": "LinkedIn Authority System",
+    "category": "social",
+    "shortDescription": "Build a personal brand that prints inbound leads.",
+    "description": "Ghostwriting + posting + DM playbooks designed to position founders as category leaders.",
+    "price": 999,
+    "currency": "USD",
+    "tags": [
+      "LinkedIn",
+      "Personal Brand",
+      "Inbound"
+    ],
+    "rating": 4.9,
+    "reviewCount": 56,
+    "features": [
+      "3 posts/week ghostwriting",
+      "DM warmup scripts",
+      "Engagement pods",
+      "Monthly review"
+    ],
+    "techStack": [
+      "Taplio",
+      "Notion",
+      "Calendly"
+    ],
+    "workflowSteps": [
+      {
+        "title": "Voice",
+        "description": "Interview to capture your POV."
+      },
+      {
+        "title": "Write",
+        "description": "Weekly content calendar."
+      },
+      {
+        "title": "Engage",
+        "description": "Build relationships at scale."
+      },
+      {
+        "title": "Convert",
+        "description": "Inbound DMs to discovery calls."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How long until results?",
+        "a": "Most clients see traction in 30 days."
+      }
+    ],
+    "thumbnail": "grad-6",
+    "status": "published",
+    "createdAt": "2026-05-30T06:16:20.947Z",
+    "updatedAt": "2026-05-30T06:41:26.289Z",
+    "deletedAt": "2026-05-30T06:41:26.289Z"
+  },
+  {
+    "id": "5c750c08-2706-4634-ad5f-e17113e3493b",
+    "title": "captionzer",
+    "category": "plugin",
+    "price": 25,
+    "shortDescription": "new",
+    "description": "ndjwn",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "captionzer",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T06:43:16.055Z",
+    "updatedAt": "2026-05-30T06:53:26.844Z",
+    "deletedAt": "2026-05-30T06:53:26.844Z"
+  },
+  {
+    "id": "b2e68934-33f8-4d98-b8bc-8fd26fa2ab63",
+    "title": "efr3rf",
+    "category": "workflow",
+    "price": 255,
+    "shortDescription": "erewr",
+    "description": "werrwr",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "efr3rf",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T06:46:54.532Z",
+    "updatedAt": "2026-05-30T06:53:30.482Z",
+    "deletedAt": "2026-05-30T06:53:30.482Z"
+  },
+  {
+    "id": "e84d7faf-2b43-443e-87c2-475cb845795e",
+    "title": "mi",
+    "category": "plugin",
+    "price": 2115,
+    "shortDescription": "kbu",
+    "description": "hjhvty",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "mi",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T06:54:17.438Z",
+    "updatedAt": "2026-05-30T07:05:41.774Z",
+    "deletedAt": "2026-05-30T07:05:41.774Z"
+  },
+  {
+    "id": "46603a49-6485-422b-8f3f-19bad3af851a",
+    "title": "Test Persistence Product",
+    "category": "workflow",
+    "price": 99,
+    "shortDescription": "Test persistence short",
+    "description": "Test persistence description",
+    "slug": "test-persistence-product",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "tags": [],
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "status": "published",
+    "createdAt": "2026-05-30T07:02:58.699Z",
+    "updatedAt": "2026-05-30T07:05:44.196Z",
+    "deletedAt": "2026-05-30T07:05:44.196Z"
+  },
+  {
+    "id": "c7ff7f4b-5cc4-4460-9b81-918ee6b2ca8e",
+    "title": "hyfyf",
+    "category": "workflow",
+    "price": 123,
+    "shortDescription": "gtdtr",
+    "description": "bjf",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "hyfyf",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T07:06:15.163Z",
+    "updatedAt": "2026-05-30T07:14:34.427Z",
+    "deletedAt": "2026-05-30T07:14:34.427Z"
+  },
+  {
+    "id": "908c2226-0f2f-485d-9d2c-74ba15a843d1",
+    "title": "wrw",
+    "category": "plugin",
+    "price": 12,
+    "shortDescription": "wrw",
+    "description": "wrer",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "wrw",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T07:14:59.861Z",
+    "updatedAt": "2026-05-30T07:16:55.035Z",
+    "deletedAt": "2026-05-30T07:16:55.035Z"
+  },
+  {
+    "id": "4ad2f46c-a8ac-4f4f-8612-a0bed9e3e5a7",
+    "title": "wewf",
+    "category": "workflow",
+    "price": 255,
+    "shortDescription": "rer",
+    "description": "re",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "thumbnailImage": "/uploads/image-1780125521575-86832835.png",
+    "slug": "wewf",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T07:19:02.053Z",
+    "updatedAt": "2026-05-30T07:21:58.917Z",
+    "deletedAt": "2026-05-30T07:21:58.917Z"
+  },
+  {
+    "id": "bfcf2f21-622f-4fa8-b73f-af5c9be484e0",
+    "title": "fef",
+    "category": "workflow",
+    "price": 65,
+    "shortDescription": "fef",
+    "description": "ef",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "fef",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T07:45:26.263Z",
+    "updatedAt": "2026-05-30T08:19:15.772Z",
+    "deletedAt": "2026-05-30T08:19:15.772Z"
+  },
+  {
+    "id": "51e4bb5f-fc1e-4507-91cf-df31b9dc6f56",
+    "title": "Captiozer",
+    "category": "plugin",
+    "price": 0.5,
+    "shortDescription": "easy",
+    "description": "useful",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "captiozer",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T08:19:44.042Z",
+    "updatedAt": "2026-05-30T09:03:14.942Z",
+    "deletedAt": "2026-05-30T09:03:14.942Z"
+  },
+  {
+    "id": "b2be9baa-2b79-4d18-b891-8b1e759303c3",
+    "title": "121",
+    "category": "plugin",
+    "price": 12,
+    "shortDescription": "12dw",
+    "description": "wad",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "/uploads/image-1780132554860-181521220.png",
+    "slug": "121",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T09:16:05.780Z",
+    "updatedAt": "2026-05-31T07:01:40.800Z",
+    "deletedAt": "2026-05-31T07:01:40.800Z"
+  },
+  {
+    "id": "f97c8010-5e67-44cd-b819-d9c94eda32a1",
+    "title": "122",
+    "category": "workflow",
+    "price": 0,
+    "shortDescription": "nu",
+    "description": "jbj",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "/uploads/image-1780132796408-152571763.jpg",
+    "slug": "122",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-30T09:20:07.244Z",
+    "updatedAt": "2026-05-30T09:22:27.498Z",
+    "deletedAt": "2026-05-30T09:22:27.498Z"
+  },
+  {
+    "id": "f6566544-80f4-43bf-aa1d-1732bdd85c69",
+    "title": "wr",
+    "category": "workflow",
+    "price": 85,
+    "shortDescription": "fefw",
+    "description": "fr4r4",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "wr",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-05-31T07:09:28.343Z",
+    "updatedAt": "2026-05-31T07:16:28.440Z",
+    "deletedAt": "2026-05-31T07:16:28.440Z"
+  }
+]

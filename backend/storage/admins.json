@@ -1,0 +1,14 @@
+[
+  {
+    "id": "admin_001",
+    "username": "admin",
+    "email": "admin@example.com",
+    "password": "$2a$10$T8wQ4ZDNXhp5g363ksSmZ.DwJ2iDc.N6JHoK8lmpFnQcPLm9VtZAu",
+    "name": "PingWin Admin",
+    "role": "super_admin",
+    "avatar": null,
+    "createdAt": "2026-05-30T09:28:55.621Z",
+    "updatedAt": "2026-05-30T09:28:55.621Z",
+    "deletedAt": null
+  }
+]

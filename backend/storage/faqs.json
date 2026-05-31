@@ -1,0 +1,66 @@
+[
+  {
+    "id": "31e7f5f3-897d-469d-b2b5-ebb3e6d5693a",
+    "q": "How fast can I get started?",
+    "a": "Most workflows ship in under 48 hours. Marketing services kick off within a week.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "13f5b9e7-e45b-4df3-a3d5-7ed7e0d97484",
+    "q": "Do you offer custom builds?",
+    "a": "Yes — book a consultation and we'll scope a custom agent or system for your stack.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "69a35d32-3ebd-400e-b42f-a936ecc24dc8",
+    "q": "What if it doesn't perform?",
+    "a": "Every engagement has a 30-day performance guarantee. If we miss, we make it right.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "ec8b2d8e-0790-449d-9f64-eacf9694909f",
+    "q": "Which industries do you serve?",
+    "a": "SaaS, ecommerce, professional services, and creator-led brands primarily.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "d82da79a-5c6a-446a-8295-7f8b7bbb2435",
+    "q": "Can I white-label?",
+    "a": "Reseller and agency partnerships available — reach out to discuss terms.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "cbd083fa-39c5-469b-a795-78f9a477a055",
+    "q": "How is pricing structured?",
+    "a": "One-time for plugins, monthly retainers for services, hybrid for managed agents.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "ae2ca848-699b-4db7-8bae-77a321ccb596",
+    "q": "Do you integrate with my CRM?",
+    "a": "We support HubSpot, Salesforce, Pipedrive, Attio, Close, and custom APIs.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  },
+  {
+    "id": "b1da7f4b-ac03-4997-b5bd-a6b80f337e89",
+    "q": "Is there a refund policy?",
+    "a": "Yes — 14-day money back on all plugin and workflow purchases.",
+    "createdAt": "2026-05-30T06:16:20.961Z",
+    "updatedAt": "2026-05-30T06:16:20.961Z",
+    "deletedAt": null
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "8273a4f5-c71f-40ee-8ca5-4f9ca3a9cb9d",
+    "email": "admin@pingwin.ai",
+    "password": "$2a$10$lbL.RFnrDI5rjfGkwPkoX.4r3rE5eR8k4RN6ztSCN3jM8RyEwHlS.",
+    "name": "PingWin Admin",
+    "role": "admin",
+    "avatar": null,
+    "createdAt": "2026-05-30T06:16:20.942Z",
+    "updatedAt": "2026-05-30T06:16:20.942Z",
+    "deletedAt": null
+  }
+]
