@@ -1,6 +1,7 @@
 // API Client for Integrit Frontend Integration
 
-const BASE_URL = "/api";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const TOKEN_KEY = "pingwin_jwt_token";
 const REFRESH_TOKEN_KEY = "pingwin_refresh_token";
 const USER_KEY = "pingwin_user";
@@ -72,7 +73,7 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
 
   const executeRequest = async () => {
     const url = endpoint.startsWith("http") ? endpoint : `${BASE_URL}${endpoint}`;
-    
+
     const headers = new Headers(options.headers || {});
     if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
       headers.set("Content-Type", "application/json");
@@ -105,7 +106,7 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
           if (refreshResponse.ok) {
             const { data } = await refreshResponse.json();
             saveTokens(data.token, refreshToken);
-            
+
             // Retry original request with new token
             headers.set("Authorization", `Bearer ${data.token}`);
             response = await fetch(url, config);
