@@ -56,25 +56,85 @@ export function MarketplaceDetailPage() {
     setEmailModalOpen(true);
   };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerEmail) return;
     setPaying(true);
 
+    alert("payment option is uploaded soon");
+
     try {
-      const { checkoutUrl } = await api.payments.createCheckoutSession({
+      // 1. Create order on the backend
+      const orderData = await api.payments.createOrder({
         customer: customerEmail,
         productSlug: product.slug,
       });
 
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      } else {
-        throw new Error("Failed to generate Stripe checkout URL.");
+      // 2. Load the Razorpay Checkout script dynamically
+      const isLoaded = await loadRazorpayScript();
+      if (!isLoaded) {
+        throw new Error("Razorpay SDK failed to load. Check your internet connection.");
       }
+
+      // 3. Define Razorpay checkout options
+      const options = {
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Integrit",
+        description: `Purchase of ${orderData.productName}`,
+        order_id: orderData.razorpayOrderId,
+        prefill: {
+          email: orderData.customerEmail,
+        },
+        theme: {
+          color: "#C0FF34",
+        },
+        handler: async function (response: any) {
+          setPaying(true);
+          try {
+            const verifyResult = await api.payments.verifyPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              orderId: orderData.orderId,
+              paymentId: orderData.paymentId,
+            });
+
+            if (verifyResult.verified) {
+              setEmailModalOpen(false);
+              navigate(`/checkout/success?payment_id=${orderData.paymentId}`);
+            } else {
+              alert("Payment verification failed.");
+            }
+          } catch (err: any) {
+            alert(err.message || "Payment verification failed.");
+          } finally {
+            setPaying(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setPaying(false);
+          },
+        },
+      };
+
+      // 4. Open Razorpay modal
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
     } catch (err: any) {
       alert(err.message || "Payment initiation failed.");
-    } finally {
       setPaying(false);
     }
   };

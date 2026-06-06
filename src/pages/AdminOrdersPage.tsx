@@ -26,7 +26,7 @@ export function AdminOrdersPage() {
   const [product, setProduct] = useState("");
   const [productSlug, setProductSlug] = useState("");
   const [amount, setAmount] = useState("");
-  const [gateway, setGateway] = useState("stripe");
+  const [gateway, setGateway] = useState("razorpay");
   const [status, setStatus] = useState("pending");
   const [date, setDate] = useState("");
 
@@ -71,7 +71,7 @@ export function AdminOrdersPage() {
       setProduct("");
       setProductSlug("");
       setAmount("");
-      setGateway("stripe");
+      setGateway("razorpay");
       setStatus("pending");
       setDate(new Date().toISOString().split("T")[0]);
     }
@@ -348,7 +348,6 @@ export function AdminOrdersPage() {
                     onChange={(e) => setGateway(e.target.value)}
                     className="w-full bg-secondary/40 rounded-full px-4 py-2 outline-none focus:ring-1 focus:ring-lime text-sm"
                   >
-                    <option value="stripe">Stripe</option>
                     <option value="razorpay">Razorpay</option>
                     <option value="paypal">PayPal</option>
                     <option value="manual">Manual Transfer</option>

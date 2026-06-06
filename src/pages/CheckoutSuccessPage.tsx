@@ -12,13 +12,13 @@ export function CheckoutSuccessPage() {
   });
 
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get("session_id");
+  const paymentId = searchParams.get("payment_id");
   const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    if (!sessionId) {
-      // If no session_id, assume we navigated here or it was processed
+    if (!paymentId) {
+      // If no payment_id, assume we navigated here or it was processed
       setStatus("success");
       return;
     }
@@ -26,9 +26,9 @@ export function CheckoutSuccessPage() {
     let isMounted = true;
     async function verify() {
       try {
-        const result = await api.payments.verifySession(sessionId!);
+        const result = await api.payments.getStatus(paymentId!);
         if (isMounted) {
-          if (result.verified) {
+          if (result.status === "completed") {
             setStatus("success");
           } else {
             setStatus("error");
@@ -38,7 +38,7 @@ export function CheckoutSuccessPage() {
       } catch (err: any) {
         if (isMounted) {
           setStatus("error");
-          setErrorMsg(err.message || "Failed to verify payment session.");
+          setErrorMsg(err.message || "Failed to verify payment status.");
         }
       }
     }
@@ -48,7 +48,7 @@ export function CheckoutSuccessPage() {
     return () => {
       isMounted = false;
     };
-  }, [sessionId]);
+  }, [paymentId]);
 
   if (status === "verifying") {
     return (
@@ -57,7 +57,7 @@ export function CheckoutSuccessPage() {
           <Loader2 className="animate-spin text-lime mx-auto mb-6" size={48} />
           <h1 className="font-display text-3xl font-bold mb-4">Verifying your payment</h1>
           <p className="text-muted-foreground">
-            Please wait while we secure confirmation from Stripe. This will only take a moment...
+            Please wait while we secure confirmation from Razorpay. This will only take a moment...
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function CheckoutSuccessPage() {
           </div>
           <h1 className="font-display text-4xl font-bold mb-4">Verification failed</h1>
           <p className="text-muted-foreground mb-10">
-            {errorMsg || "We couldn't verify your Stripe session. Please check with your payment provider or contact support."}
+            {errorMsg || "We couldn't verify your payment. Please check with your payment provider or contact support."}
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
             <Link to="/marketplace" className="btn-lime text-sm">

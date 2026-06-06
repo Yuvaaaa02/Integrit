@@ -1,11 +1,11 @@
 import { JsonStore } from '../utils/JsonStore.js';
 import { successResponse, errorResponse } from '../utils/response.js';
 import {
-  createCheckoutSession as stripeCreateCheckoutSession,
-  retrieveSession,
-  constructWebhookEvent,
-  createRefund as stripeCreateRefund,
-} from '../services/stripeService.js';
+  createRazorpayOrder,
+  verifyPaymentSignature,
+  verifyWebhookSignature,
+  createRazorpayRefund,
+} from '../services/razorpayService.js';
 
 const paymentStore = new JsonStore('payments.json');
 const orderStore = new JsonStore('orders.json');
@@ -25,17 +25,17 @@ function generateInvoiceId() {
   return 'inv_' + Math.floor(10000 + Math.random() * 90000);
 }
 
-// ─── Create Checkout Session ────────────────────────────────
+// ─── Create Razorpay Order ──────────────────────────────────
 
 /**
- * POST /api/payments/create-checkout-session
+ * POST /api/payments/create-order
  *
- * Creates a Stripe Checkout Session. Server-side price lookup ensures
+ * Creates a Razorpay Order. Server-side price lookup ensures
  * the frontend can never manipulate the charged amount.
  *
  * Body: { customer: string (email), productSlug: string, quantity?: number }
  */
-export async function createCheckoutSessionHandler(req, res, next) {
+export async function createOrderHandler(req, res, next) {
   try {
     const { customer, productSlug, quantity = 1 } = req.body;
 
@@ -50,7 +50,7 @@ export async function createCheckoutSessionHandler(req, res, next) {
     }
 
     const amount = product.price; // Whole-dollar amount from DB
-    const currency = (product.currency || 'USD').toLowerCase();
+    const currency = (product.currency || 'USD').toUpperCase();
 
     // ── Create order ──
     const orderId = generateOrderId();
@@ -62,8 +62,8 @@ export async function createCheckoutSessionHandler(req, res, next) {
       product: product.title,
       productSlug: product.slug,
       amount,
-      currency: currency.toUpperCase(),
-      gateway: 'stripe',
+      currency,
+      gateway: 'razorpay',
       status: 'pending',
       date: formattedDate,
     };
@@ -74,337 +74,362 @@ export async function createCheckoutSessionHandler(req, res, next) {
       orderId,
       customer,
       amount,
-      currency: currency.toUpperCase(),
-      gateway: 'stripe',
+      currency,
+      gateway: 'razorpay',
       status: 'pending',
-      stripeSessionId: null, // Set after Stripe call
-      stripePaymentIntentId: null,
+      razorpayOrderId: null, // Set after Razorpay call
+      razorpayPaymentId: null,
+      razorpaySignature: null,
       paymentMethod: 'card',
     };
     const createdPayment = await paymentStore.create(pendingPayment);
 
-    // ── Create Stripe Checkout Session ──
-    const { sessionId, checkoutUrl } = await stripeCreateCheckoutSession({
-      productName: product.title,
-      amount,
+    // ── Create Razorpay Order ──
+    const rzpOrder = await createRazorpayOrder({
+      amount: amount * quantity,
       currency,
-      quantity: parseInt(quantity, 10) || 1,
-      customerEmail: customer,
-      orderId,
-      paymentId: createdPayment.id,
-      productSlug: product.slug,
+      receipt: orderId,
+      notes: {
+        orderId,
+        paymentId: createdPayment.id,
+        productSlug: product.slug,
+        customer,
+      },
     });
 
-    // ── Update payment with Stripe session ID ──
+    // ── Update payment with Razorpay Order ID ──
     await paymentStore.update(createdPayment.id, {
-      stripeSessionId: sessionId,
+      razorpayOrderId: rzpOrder.id,
     });
 
     return successResponse(res, {
       success: true,
-      sessionId,
-      checkoutUrl,
+      keyId: process.env.RAZORPAY_KEY_ID || '',
+      amount: rzpOrder.amount,
+      currency: rzpOrder.currency,
+      razorpayOrderId: rzpOrder.id,
       orderId,
       paymentId: createdPayment.id,
-    }, 'Checkout session created successfully');
+      productName: product.title,
+      productSlug: product.slug,
+      customerEmail: customer,
+    }, 'Razorpay order created successfully');
   } catch (error) {
-    console.error('❌ Error creating checkout session:', error.message);
+    console.error('❌ Error creating Razorpay order:', error.message);
+    const statusCode = error.statusCode === 401 ? 400 : (error.statusCode || 500);
+    const err = new Error(error.message || 'Error creating Razorpay order');
+    err.statusCode = statusCode;
+    next(err);
+  }
+}
+
+// ─── Verify Payment (Signature Verification) ────────────────
+
+/**
+ * POST /api/payments/verify-payment
+ *
+ * Verifies Razorpay payment signature and updates order status.
+ *
+ * Body: { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, paymentId }
+ */
+export async function verifyPaymentHandler(req, res, next) {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId, paymentId } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return errorResponse(res, 'Razorpay order ID, payment ID, and signature are required', 400);
+    }
+
+    // ── Verify signature ──
+    const isVerified = verifyPaymentSignature(razorpay_order_id, razorpay_payment_id, razorpay_signature);
+    if (!isVerified) {
+      if (paymentId) {
+        await paymentStore.update(paymentId, {
+          status: 'failed',
+          updatedAt: new Date().toISOString(),
+        });
+      }
+      if (orderId) {
+        const order = await orderStore.findOne({ orderId });
+        if (order) {
+          await orderStore.update(order.id, { status: 'failed' });
+        }
+      }
+      return errorResponse(res, 'Payment signature verification failed', 400);
+    }
+
+    // ── Retrieve payment and order ──
+    const payment = paymentId ? await paymentStore.findById(paymentId) : null;
+    const order = orderId ? await orderStore.findOne({ orderId }) : null;
+
+    if (!payment) {
+      return errorResponse(res, 'Payment record not found', 404);
+    }
+
+    // Idempotent check
+    if (payment.status !== 'completed') {
+      // ── Update payment ──
+      await paymentStore.update(payment.id, {
+        status: 'completed',
+        razorpayPaymentId: razorpay_payment_id,
+        razorpaySignature: razorpay_signature,
+        completedAt: new Date().toISOString(),
+      });
+
+      // ── Update order ──
+      if (order && order.status !== 'paid') {
+        await orderStore.update(order.id, { status: 'paid' });
+
+        // Update analytics
+        const analytics = await analyticsStore.find({});
+        if (analytics && analytics.length > 0) {
+          const stats = analytics[0];
+          await analyticsStore.update(stats.id, {
+            totalOrders: (stats.totalOrders || 0) + 1,
+            totalRevenue: (stats.totalRevenue || 0) + (order.amount || 0),
+          });
+        }
+      }
+
+      // ── Create invoice ──
+      const existingInvoices = await invoiceStore.find({});
+      const invoiceExists = existingInvoices.some((inv) => inv.paymentId === payment.id);
+      if (!invoiceExists) {
+        await invoiceStore.create({
+          invoiceId: generateInvoiceId(),
+          orderId: order ? order.orderId : payment.orderId,
+          paymentId: payment.id,
+          amount: payment.amount,
+          currency: payment.currency,
+          customerEmail: payment.customer,
+          productName: order ? order.product : 'Unknown',
+          issuedAt: new Date().toISOString(),
+          razorpayPaymentId: razorpay_payment_id,
+        });
+      }
+
+      // ── Log transaction ──
+      const existingTxns = await transactionStore.find({});
+      const txnExists = existingTxns.some(
+        (t) => t.razorpayPaymentId === razorpay_payment_id && t.eventType === 'payment_verified'
+      );
+      if (!txnExists) {
+        await transactionStore.create({
+          eventType: 'payment_verified',
+          razorpayOrderId: razorpay_order_id,
+          razorpayPaymentId: razorpay_payment_id,
+          status: 'completed',
+          timestamp: new Date().toISOString(),
+          metadata: { orderId: payment.orderId, paymentId: payment.id },
+        });
+      }
+    }
+
+    const updatedOrder = orderId ? await orderStore.findOne({ orderId }) : null;
+    const updatedPayment = await paymentStore.findById(payment.id);
+
+    return successResponse(res, {
+      verified: true,
+      paymentStatus: 'captured',
+      order: updatedOrder
+        ? {
+            orderId: updatedOrder.orderId,
+            product: updatedOrder.product,
+            amount: updatedOrder.amount,
+            currency: updatedOrder.currency,
+            status: updatedOrder.status,
+            date: updatedOrder.date,
+          }
+        : null,
+      payment: updatedPayment
+        ? {
+            id: updatedPayment.id,
+            status: updatedPayment.status,
+            amount: updatedPayment.amount,
+            currency: updatedPayment.currency,
+            completedAt: updatedPayment.completedAt,
+          }
+        : null,
+      customerEmail: payment.customer,
+    }, 'Payment verified successfully');
+  } catch (error) {
+    console.error('❌ Payment verification error:', error.message);
     next(error);
   }
 }
 
-// ─── Stripe Webhook ─────────────────────────────────────────
+// ─── Razorpay Webhook ───────────────────────────────────────
 
 /**
  * POST /api/payments/webhook
  *
- * Handles Stripe webhook events. Uses raw body for signature verification.
+ * Handles Razorpay webhook events.
  */
-export async function handleStripeWebhook(req, res) {
-  const signature = req.headers['stripe-signature'];
+export async function handleRazorpayWebhook(req, res) {
+  const signature = req.headers['x-razorpay-signature'];
+  const rawBody = req.rawBody ? req.rawBody.toString() : JSON.stringify(req.body);
 
-  let event;
+  if (!signature) {
+    console.error('⚠️ Webhook missing x-razorpay-signature header');
+    return res.status(400).json({ error: 'Missing signature' });
+  }
+
   try {
-    event = constructWebhookEvent(req.rawBody || req.body, signature);
+    const isVerified = verifyWebhookSignature(rawBody, signature);
+    if (!isVerified) {
+      console.error('⚠️ Webhook signature verification failed');
+      return res.status(400).json({ error: 'Signature mismatch' });
+    }
   } catch (err) {
-    console.error('⚠️ Webhook signature verification failed:', err.message);
-    return res.status(400).json({ error: `Webhook Error: ${err.message}` });
+    console.error('⚠️ Webhook signature verification error:', err.message);
+    return res.status(400).json({ error: err.message });
   }
 
-  console.log(`🔔 Webhook received: ${event.type}`);
+  const event = req.body;
+  console.log(`🔔 Webhook received: ${event.event}`);
 
   try {
-    switch (event.type) {
-      case 'checkout.session.completed':
-        await handleCheckoutCompleted(event.data.object);
-        break;
-
-      case 'checkout.session.expired':
-        await handleCheckoutExpired(event.data.object);
-        break;
-
-      case 'payment_intent.payment_failed':
-        await handlePaymentFailed(event.data.object);
-        break;
-
-      default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
-    }
-
-    // Log every webhook event as a transaction record
-    await transactionStore.create({
-      eventType: event.type,
-      stripeEventId: event.id,
-      sessionId: event.data.object.id || null,
-      paymentIntentId: event.data.object.payment_intent || null,
-      status: event.data.object.status || event.data.object.payment_status || null,
-      timestamp: new Date().toISOString(),
-      metadata: event.data.object.metadata || {},
-    });
-  } catch (err) {
-    console.error('❌ Webhook processing error:', err.message);
-    // Still return 200 to Stripe so it doesn't retry
-  }
-
-  // Always acknowledge receipt to Stripe
-  return res.status(200).json({ received: true });
-}
-
-/**
- * Handle checkout.session.completed — payment succeeded.
- */
-async function handleCheckoutCompleted(session) {
-  const { orderId, paymentId } = session.metadata || {};
-
-  if (!orderId || !paymentId) {
-    console.warn('⚠️ Webhook missing metadata, skipping:', session.id);
-    return;
-  }
-
-  // ── Update payment ──
-  const payment = await paymentStore.findById(paymentId);
-  if (!payment) {
-    console.warn(`⚠️ Payment ${paymentId} not found for webhook`);
-    return;
-  }
-
-  // Idempotency: don't process already-completed payments
-  if (payment.status === 'completed') {
-    console.log(`ℹ️ Payment ${paymentId} already completed, skipping`);
-    return;
-  }
-
-  await paymentStore.update(paymentId, {
-    status: 'completed',
-    stripePaymentIntentId: session.payment_intent,
-    stripeSessionId: session.id,
-    completedAt: new Date().toISOString(),
-  });
-
-  // ── Update order ──
-  const order = await orderStore.findOne({ orderId });
-  if (order && order.status !== 'paid') {
-    await orderStore.update(order.id, { status: 'paid' });
-
-    // ── Update analytics ──
-    const analytics = await analyticsStore.find({});
-    if (analytics && analytics.length > 0) {
-      const stats = analytics[0];
-      await analyticsStore.update(stats.id, {
-        totalOrders: (stats.totalOrders || 0) + 1,
-        totalRevenue: (stats.totalRevenue || 0) + (order.amount || 0),
-      });
-    }
-  }
-
-  // ── Create invoice ──
-  await invoiceStore.create({
-    invoiceId: generateInvoiceId(),
-    orderId,
-    paymentId,
-    amount: payment.amount,
-    currency: payment.currency,
-    customerEmail: session.customer_email || payment.customer,
-    productName: order ? order.product : 'Unknown',
-    issuedAt: new Date().toISOString(),
-    stripePaymentIntentId: session.payment_intent,
-  });
-
-  console.log(`✅ Payment ${paymentId} completed for order ${orderId}`);
-}
-
-/**
- * Handle checkout.session.expired — session timed out.
- */
-async function handleCheckoutExpired(session) {
-  const { orderId, paymentId } = session.metadata || {};
-  if (!paymentId) return;
-
-  const payment = await paymentStore.findById(paymentId);
-  if (payment && payment.status === 'pending') {
-    await paymentStore.update(paymentId, {
-      status: 'expired',
-      updatedAt: new Date().toISOString(),
-    });
-  }
-
-  if (orderId) {
-    const order = await orderStore.findOne({ orderId });
-    if (order && order.status === 'pending') {
-      await orderStore.update(order.id, { status: 'failed' });
-    }
-  }
-
-  console.log(`⏰ Session expired for payment ${paymentId}`);
-}
-
-/**
- * Handle payment_intent.payment_failed — card declined, etc.
- */
-async function handlePaymentFailed(paymentIntent) {
-  // Find payment by Stripe payment intent ID
-  const payments = await paymentStore.find({});
-  const payment = payments.find(
-    (p) => p.stripePaymentIntentId === paymentIntent.id
-  );
-
-  if (payment && payment.status === 'pending') {
-    await paymentStore.update(payment.id, {
-      status: 'failed',
-      failureReason: paymentIntent.last_payment_error?.message || 'Payment failed',
-      updatedAt: new Date().toISOString(),
-    });
-
-    const order = await orderStore.findOne({ orderId: payment.orderId });
-    if (order) {
-      await orderStore.update(order.id, { status: 'failed' });
-    }
-  }
-
-  console.log(`❌ Payment failed for intent ${paymentIntent.id}`);
-}
-
-// ─── Verify Session (Frontend Fallback) ─────────────────────
-
-/**
- * POST /api/payments/verify-session
- *
- * Called by frontend after Stripe redirect. Verifies the session
- * directly with Stripe and syncs local records.
- *
- * Body: { sessionId: string }
- */
-export async function verifySession(req, res, next) {
-  try {
-    const { sessionId } = req.body;
-
-    if (!sessionId) {
-      return errorResponse(res, 'Session ID is required', 400);
-    }
-
-    // ── Retrieve session from Stripe ──
-    const session = await retrieveSession(sessionId);
-
-    const { orderId, paymentId } = session.metadata || {};
-
-    // ── Sync local records based on Stripe session status ──
-    if (session.payment_status === 'paid' && paymentId) {
-      const payment = await paymentStore.findById(paymentId);
-
-      // Idempotent: only update if still pending
-      if (payment && payment.status === 'pending') {
-        await paymentStore.update(paymentId, {
-          status: 'completed',
-          stripePaymentIntentId: typeof session.payment_intent === 'string'
-            ? session.payment_intent
-            : session.payment_intent?.id || null,
-          completedAt: new Date().toISOString(),
-        });
-
-        const order = await orderStore.findOne({ orderId });
-        if (order && order.status !== 'paid') {
-          await orderStore.update(order.id, { status: 'paid' });
-
-          // Update analytics
-          const analytics = await analyticsStore.find({});
-          if (analytics && analytics.length > 0) {
-            const stats = analytics[0];
-            await analyticsStore.update(stats.id, {
-              totalOrders: (stats.totalOrders || 0) + 1,
-              totalRevenue: (stats.totalRevenue || 0) + (order.amount || 0),
+    const payload = event.payload;
+    
+    switch (event.event) {
+      case 'order.paid':
+      case 'payment.captured': {
+        const paymentObj = payload.payment.entity;
+        const razorpayOrderId = paymentObj.order_id;
+        const razorpayPaymentId = paymentObj.id;
+        
+        const payments = await paymentStore.find({});
+        let payment = payments.find((p) => p.razorpayOrderId === razorpayOrderId);
+        
+        if (!payment && paymentObj.notes) {
+          const { paymentId } = paymentObj.notes;
+          if (paymentId) {
+            payment = await paymentStore.findById(paymentId);
+          }
+        }
+        
+        if (payment) {
+          if (payment.status !== 'completed') {
+            await paymentStore.update(payment.id, {
+              status: 'completed',
+              razorpayPaymentId,
+              razorpaySignature: signature,
+              completedAt: new Date().toISOString(),
+            });
+            
+            const order = await orderStore.findOne({ orderId: payment.orderId });
+            if (order && order.status !== 'paid') {
+              await orderStore.update(order.id, { status: 'paid' });
+              
+              const analytics = await analyticsStore.find({});
+              if (analytics && analytics.length > 0) {
+                const stats = analytics[0];
+                await analyticsStore.update(stats.id, {
+                  totalOrders: (stats.totalOrders || 0) + 1,
+                  totalRevenue: (stats.totalRevenue || 0) + (order.amount || 0),
+                });
+              }
+            }
+            
+            await invoiceStore.create({
+              invoiceId: generateInvoiceId(),
+              orderId: payment.orderId,
+              paymentId: payment.id,
+              amount: payment.amount,
+              currency: payment.currency,
+              customerEmail: payment.customer,
+              productName: order ? order.product : 'Unknown',
+              issuedAt: new Date().toISOString(),
+              razorpayPaymentId,
             });
           }
         }
-
-        // Create invoice if not already created by webhook
-        const existingInvoices = await invoiceStore.find({});
-        const invoiceExists = existingInvoices.some((inv) => inv.paymentId === paymentId);
-        if (!invoiceExists) {
-          await invoiceStore.create({
-            invoiceId: generateInvoiceId(),
-            orderId,
-            paymentId,
-            amount: payment.amount,
-            currency: payment.currency,
-            customerEmail: session.customer_email || payment.customer,
-            productName: order ? order.product : 'Unknown',
-            issuedAt: new Date().toISOString(),
-            stripePaymentIntentId: typeof session.payment_intent === 'string'
-              ? session.payment_intent
-              : session.payment_intent?.id || null,
-          });
-        }
-
-        // Log transaction if not already logged by webhook
-        const existingTxns = await transactionStore.find({});
-        const txnExists = existingTxns.some(
-          (t) => t.sessionId === sessionId && t.eventType === 'session_verified'
-        );
-        if (!txnExists) {
-          await transactionStore.create({
-            eventType: 'session_verified',
-            sessionId,
-            paymentIntentId: typeof session.payment_intent === 'string'
-              ? session.payment_intent
-              : session.payment_intent?.id || null,
-            status: 'completed',
-            timestamp: new Date().toISOString(),
-            metadata: session.metadata || {},
-          });
-        }
+        break;
       }
+      
+      case 'payment.failed': {
+        const paymentObj = payload.payment.entity;
+        const razorpayOrderId = paymentObj.order_id;
+        
+        const payments = await paymentStore.find({});
+        let payment = payments.find((p) => p.razorpayOrderId === razorpayOrderId);
+        
+        if (!payment && paymentObj.notes) {
+          const { paymentId } = paymentObj.notes;
+          if (paymentId) {
+            payment = await paymentStore.findById(paymentId);
+          }
+        }
+        
+        if (payment && payment.status === 'pending') {
+          await paymentStore.update(payment.id, {
+            status: 'failed',
+            failureReason: paymentObj.error_description || 'Payment failed',
+            updatedAt: new Date().toISOString(),
+          });
+          
+          const order = await orderStore.findOne({ orderId: payment.orderId });
+          if (order) {
+            await orderStore.update(order.id, { status: 'failed' });
+          }
+        }
+        break;
+      }
+      
+      default:
+        console.log(`ℹ️ Unhandled Razorpay event: ${event.event}`);
     }
 
-    // ── Build response ──
-    const order = orderId ? await orderStore.findOne({ orderId }) : null;
-    const payment = paymentId ? await paymentStore.findById(paymentId) : null;
+    await transactionStore.create({
+      eventType: event.event,
+      razorpayEventId: event.id || null,
+      razorpayOrderId: event.payload.payment?.entity?.order_id || null,
+      razorpayPaymentId: event.payload.payment?.entity?.id || null,
+      status: event.payload.payment?.entity?.status || null,
+      timestamp: new Date().toISOString(),
+      metadata: event.payload.payment?.entity?.notes || {},
+    });
+    
+  } catch (err) {
+    console.error('❌ Webhook processing error:', err.message);
+  }
 
+  return res.status(200).json({ received: true });
+}
+
+// ─── Get Payment Status ─────────────────────────────────────
+
+/**
+ * GET /api/payments/status/:paymentId
+ *
+ * Returns payment status for a payment ID.
+ */
+export async function getPaymentStatusHandler(req, res, next) {
+  try {
+    const { paymentId } = req.params;
+    
+    const payment = await paymentStore.findById(paymentId);
+    if (!payment) {
+      return errorResponse(res, 'Payment not found', 404);
+    }
+    
+    const order = await orderStore.findOne({ orderId: payment.orderId });
+    
     return successResponse(res, {
-      verified: session.payment_status === 'paid',
-      paymentStatus: session.payment_status,
-      order: order
-        ? {
-            orderId: order.orderId,
-            product: order.product,
-            amount: order.amount,
-            currency: order.currency,
-            status: order.status,
-            date: order.date,
-          }
-        : null,
-      payment: payment
-        ? {
-            id: payment.id,
-            status: payment.status,
-            amount: payment.amount,
-            currency: payment.currency,
-            completedAt: payment.completedAt,
-          }
-        : null,
-      customerEmail: session.customer_email,
-    }, session.payment_status === 'paid' ? 'Payment verified successfully' : 'Payment not yet completed');
+      id: payment.id,
+      status: payment.status,
+      amount: payment.amount,
+      currency: payment.currency,
+      completedAt: payment.completedAt,
+      order: order ? {
+        orderId: order.orderId,
+        product: order.product,
+        amount: order.amount,
+        currency: order.currency,
+        status: order.status,
+      } : null
+    }, 'Payment status retrieved successfully');
   } catch (error) {
-    console.error('❌ Session verification error:', error.message);
     next(error);
   }
 }
@@ -414,14 +439,13 @@ export async function verifySession(req, res, next) {
 /**
  * POST /api/payments/refund/:transactionId
  *
- * Initiates a Stripe refund for a completed payment.
+ * Initiates a Razorpay refund for a completed payment.
  * Admin-only endpoint.
  */
 export async function refundPayment(req, res, next) {
   try {
     const { transactionId } = req.params;
 
-    // Find payment by internal ID or legacy transactionId
     let payment = await paymentStore.findById(transactionId);
     if (!payment) {
       payment = await paymentStore.findOne({ transactionId });
@@ -434,12 +458,12 @@ export async function refundPayment(req, res, next) {
       return errorResponse(res, 'Only completed payments can be refunded', 400);
     }
 
-    if (!payment.stripePaymentIntentId) {
-      return errorResponse(res, 'No Stripe payment intent found for this payment', 400);
+    if (!payment.razorpayPaymentId) {
+      return errorResponse(res, 'No Razorpay payment ID found for this payment', 400);
     }
 
-    // ── Call Stripe refund API ──
-    const stripeRefund = await stripeCreateRefund(payment.stripePaymentIntentId);
+    // ── Call Razorpay refund API ──
+    const razorpayRefund = await createRazorpayRefund(payment.razorpayPaymentId);
 
     // ── Update payment status ──
     await paymentStore.update(payment.id, {
@@ -466,34 +490,37 @@ export async function refundPayment(req, res, next) {
     await refundStore.create({
       paymentId: payment.id,
       orderId: payment.orderId,
-      stripeRefundId: stripeRefund.id,
-      stripePaymentIntentId: payment.stripePaymentIntentId,
+      razorpayRefundId: razorpayRefund.id,
+      razorpayPaymentId: payment.razorpayPaymentId,
       amount: payment.amount,
       currency: payment.currency,
-      status: stripeRefund.status,
+      status: razorpayRefund.status,
       refundedAt: new Date().toISOString(),
     });
 
     // ── Log transaction ──
     await transactionStore.create({
       eventType: 'refund_processed',
-      sessionId: payment.stripeSessionId,
-      paymentIntentId: payment.stripePaymentIntentId,
-      stripeRefundId: stripeRefund.id,
+      razorpayOrderId: payment.razorpayOrderId,
+      razorpayPaymentId: payment.razorpayPaymentId,
+      razorpayRefundId: razorpayRefund.id,
       status: 'refunded',
       timestamp: new Date().toISOString(),
       metadata: { orderId: payment.orderId, paymentId: payment.id },
     });
 
     return successResponse(res, {
-      refundId: stripeRefund.id,
-      status: stripeRefund.status,
+      refundId: razorpayRefund.id,
+      status: razorpayRefund.status,
       amount: payment.amount,
       currency: payment.currency,
     }, 'Payment refunded successfully');
   } catch (error) {
     console.error('❌ Refund error:', error.message);
-    next(error);
+    const statusCode = error.statusCode === 401 ? 400 : (error.statusCode || 500);
+    const err = new Error(error.message || 'Refund processing failed');
+    err.statusCode = statusCode;
+    next(err);
   }
 }
 
@@ -517,7 +544,6 @@ export async function getPaymentStats(req, res, next) {
     const totalRevenue = successful.reduce((sum, p) => sum + (p.amount || 0), 0);
     const refundedAmount = refunded.reduce((sum, p) => sum + (p.amount || 0), 0);
 
-    // Recent transactions
     const recentPayments = [...payments]
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, 10);

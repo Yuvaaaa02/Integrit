@@ -613,5 +613,27 @@
     "createdAt": "2026-05-31T07:09:28.343Z",
     "updatedAt": "2026-05-31T07:16:28.440Z",
     "deletedAt": "2026-05-31T07:16:28.440Z"
+  },
+  {
+    "id": "f4b704ad-f6ca-4b06-8aca-31dff1dd905a",
+    "title": "121",
+    "category": "workflow",
+    "price": -1,
+    "shortDescription": "qewewrew",
+    "description": "ewrw2wr",
+    "tags": [],
+    "status": "published",
+    "thumbnail": "grad-1",
+    "slug": "121",
+    "rating": 5,
+    "reviewCount": 0,
+    "currency": "USD",
+    "features": [],
+    "techStack": [],
+    "workflowSteps": [],
+    "faqs": [],
+    "createdAt": "2026-06-06T17:12:47.822Z",
+    "updatedAt": "2026-06-06T17:12:47.822Z",
+    "deletedAt": null
   }
 ]

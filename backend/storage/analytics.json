@@ -8,9 +8,9 @@
     "totalInquiries": 0,
     "loginAttempts": 0,
     "paymentAttempts": 0,
-    "apiCalls": 1450,
+    "apiCalls": 1486,
     "createdAt": "2026-05-30T06:16:20.974Z",
-    "updatedAt": "2026-05-31T08:30:26.661Z",
+    "updatedAt": "2026-06-06T17:23:06.480Z",
     "deletedAt": null
   }
 ]

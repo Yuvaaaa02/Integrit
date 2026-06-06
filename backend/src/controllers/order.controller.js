@@ -77,7 +77,7 @@ export async function createOrder(req, res, next) {
       productSlug,
       amount: parseFloat(amount),
       currency: currency || 'USD',
-      gateway: gateway || 'stripe',
+      gateway: gateway || 'razorpay',
       status: status || 'pending',
       date: formattedDate
     };

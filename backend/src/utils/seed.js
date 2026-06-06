@@ -331,12 +331,12 @@ export async function seedAll() {
   // ── Orders (mock) ──
   const orderStore = new JsonStore('orders.json');
   const orderSeeded = await orderStore.seed([
-    { orderId: 'ord_8821', customer: 'maya@northwind.ai', product: 'Autopilot Sales Agent', productSlug: 'autopilot-sales-agent', amount: 299, currency: 'USD', gateway: 'stripe', status: 'paid', date: '2026-05-29' },
-    { orderId: 'ord_8820', customer: 'james@lumen.studio', product: 'Viral Reels Engine', productSlug: 'viral-reels-engine', amount: 1499, currency: 'USD', gateway: 'stripe', status: 'paid', date: '2026-05-29' },
+    { orderId: 'ord_8821', customer: 'maya@northwind.ai', product: 'Autopilot Sales Agent', productSlug: 'autopilot-sales-agent', amount: 299, currency: 'USD', gateway: 'razorpay', status: 'paid', date: '2026-05-29' },
+    { orderId: 'ord_8820', customer: 'james@lumen.studio', product: 'Viral Reels Engine', productSlug: 'viral-reels-engine', amount: 1499, currency: 'USD', gateway: 'razorpay', status: 'paid', date: '2026-05-29' },
     { orderId: 'ord_8819', customer: 'sofia@drift.co', product: 'Slack AI Assistant', productSlug: 'slack-ai-assistant', amount: 79, currency: 'USD', gateway: 'razorpay', status: 'paid', date: '2026-05-28' },
-    { orderId: 'ord_8818', customer: 'daniel@helix.health', product: 'LinkedIn Authority System', productSlug: 'linkedin-authority-system', amount: 999, currency: 'USD', gateway: 'stripe', status: 'pending', date: '2026-05-28' },
+    { orderId: 'ord_8818', customer: 'daniel@helix.health', product: 'LinkedIn Authority System', productSlug: 'linkedin-authority-system', amount: 999, currency: 'USD', gateway: 'razorpay', status: 'pending', date: '2026-05-28' },
     { orderId: 'ord_8817', customer: 'aisha@miralabs.io', product: 'Content Factory Pro', productSlug: 'content-factory-pro', amount: 199, currency: 'USD', gateway: 'razorpay', status: 'paid', date: '2026-05-27' },
-    { orderId: 'ord_8816', customer: 'tom@apex.ventures', product: 'Shopify Upsell AI', productSlug: 'shopify-upsell-ai', amount: 129, currency: 'USD', gateway: 'stripe', status: 'failed', date: '2026-05-26' },
+    { orderId: 'ord_8816', customer: 'tom@apex.ventures', product: 'Shopify Upsell AI', productSlug: 'shopify-upsell-ai', amount: 129, currency: 'USD', gateway: 'razorpay', status: 'failed', date: '2026-05-26' },
   ]);
   if (orderSeeded) console.log('  ✓ orders.json seeded');
 

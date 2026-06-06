@@ -92,7 +92,7 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
     let response = await fetch(url, config);
 
     // If unauthorized, attempt to refresh the token and retry once
-    if (response.status === 401 && endpoint !== "/auth/login") {
+    if (response.status === 401 && endpoint !== "/auth/login" && !endpoint.includes("/payments")) {
       const refreshToken = getRefreshToken();
       if (refreshToken && endpoint !== "/auth/refresh") {
         try {
@@ -341,44 +341,31 @@ export const api = {
   },
 
   payments: {
-    async initiate(data: {
-      orderId?: string;
-      customer: string;
-      product: string;
-      productSlug: string;
-      amount: number;
-      currency?: string;
-      gateway?: string;
-    }) {
-      return request("/payments/create-checkout-session", {
-        method: "POST",
-        body: JSON.stringify({
-          customer: data.customer,
-          productSlug: data.productSlug,
-          quantity: 1,
-        }),
-      });
-    },
-    async verify(transactionId: string, status: "success" | "failed") {
-      return request("/payments/verify-session", {
-        method: "POST",
-        body: JSON.stringify({ sessionId: transactionId }),
-      });
-    },
-    async createCheckoutSession(data: {
+    async createOrder(data: {
       customer: string;
       productSlug: string;
       quantity?: number;
     }) {
-      return request("/payments/create-checkout-session", {
+      return request("/payments/create-order", {
         method: "POST",
         body: JSON.stringify(data),
       });
     },
-    async verifySession(sessionId: string) {
-      return request("/payments/verify-session", {
+    async verifyPayment(data: {
+      razorpay_order_id: string;
+      razorpay_payment_id: string;
+      razorpay_signature: string;
+      orderId: string;
+      paymentId: string;
+    }) {
+      return request("/payments/verify-payment", {
         method: "POST",
-        body: JSON.stringify({ sessionId }),
+        body: JSON.stringify(data),
+      });
+    },
+    async getStatus(paymentId: string) {
+      return request(`/payments/status/${paymentId}`, {
+        method: "GET",
       });
     },
   },

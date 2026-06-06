@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import {
-  createCheckoutSessionHandler,
-  verifySession,
-  handleStripeWebhook,
+  createOrderHandler,
+  verifyPaymentHandler,
+  getPaymentStatusHandler,
+  handleRazorpayWebhook,
   refundPayment,
   getPaymentStats
 } from '../controllers/payment.controller.js';
@@ -13,30 +14,35 @@ import { validate } from '../middleware/validate.middleware.js';
 
 const router = Router();
 
-// Create Stripe checkout session
+// Create Razorpay order
 router.post(
-  '/create-checkout-session',
+  '/create-order',
   [
     body('customer').isEmail().withMessage('Valid customer email is required'),
     body('productSlug').notEmpty().withMessage('Product slug is required'),
     body('quantity').optional().isInt({ min: 1 }).withMessage('Quantity must be a positive integer'),
     validate
   ],
-  createCheckoutSessionHandler
+  createOrderHandler
 );
 
-// Verify Stripe checkout session (client success fallback)
+// Verify Razorpay payment signature
 router.post(
-  '/verify-session',
+  '/verify-payment',
   [
-    body('sessionId').notEmpty().withMessage('Session ID is required'),
+    body('razorpay_order_id').notEmpty().withMessage('Razorpay order ID is required'),
+    body('razorpay_payment_id').notEmpty().withMessage('Razorpay payment ID is required'),
+    body('razorpay_signature').notEmpty().withMessage('Razorpay signature is required'),
     validate
   ],
-  verifySession
+  verifyPaymentHandler
 );
 
-// Stripe Webhook (using raw body parser parsed in server.js)
-router.post('/webhook', handleStripeWebhook);
+// Retrieve payment status
+router.get('/status/:paymentId', getPaymentStatusHandler);
+
+// Razorpay Webhook
+router.post('/webhook', handleRazorpayWebhook);
 
 // Refund completed payment (Admin only)
 router.post('/refund/:transactionId', authMiddleware, adminMiddleware, refundPayment);
