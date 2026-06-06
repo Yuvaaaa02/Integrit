@@ -30,13 +30,23 @@ app.use(helmet({
   crossOriginResourcePolicy: false // Allow loading uploaded images on frontend
 }));
 
-// CORS configuration
-app.use(cors({
-  origin: config.cors.origin,
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// CORS configuration validation
+if (!process.env.FRONTEND_URL) {
+  console.warn('⚠️  WARNING: FRONTEND_URL is not defined in environment variables. Production CORS requests will fail.');
+}
+
+// Secure production-ready CORS configuration allowing production frontend and local dev environment
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_URL,
+      "http://localhost:5173"
+    ].filter(Boolean),
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
 
 // Request parsers
 app.use(express.json({
