@@ -26,46 +26,44 @@ if (!fs.existsSync(uploadDir)) {
 const app = express();
 
 // Security headers
-app.use(helmet({
-  crossOriginResourcePolicy: false // Allow loading uploaded images on frontend
-}));
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 
-// CORS configuration validation
-if (!process.env.FRONTEND_URL) {
-  console.warn('⚠️  WARNING: FRONTEND_URL is not defined in environment variables. Production CORS requests will fail.');
-}
+// CORS
+const allowedOrigins = [
+  "https://integrit-five.vercel.app",
+  "http://localhost:5173",
+];
 
-// Secure production-ready CORS configuration allowing production frontend and local dev environment
-// Security headers
-app.use(helmet({
-  crossOriginResourcePolicy: false
-}));
-
-// TEMPORARY CORS TEST
 app.use(
   cors({
-    origin: true,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked: ${origin}`));
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 // Request parsers
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
-app.use(express.urlencoded({ extended: true }));
-
-// Request parsers
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
 app.use(express.urlencoded({ extended: true }));
 
 // HTTP request logging (console)
