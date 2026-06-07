@@ -36,17 +36,29 @@ if (!process.env.FRONTEND_URL) {
 }
 
 // Secure production-ready CORS configuration allowing production frontend and local dev environment
+// Security headers
+app.use(helmet({
+  crossOriginResourcePolicy: false
+}));
+
+// TEMPORARY CORS TEST
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL,
-      "http://localhost:5173"
-    ].filter(Boolean),
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']
   })
 );
+
+// Request parsers
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
+
+app.use(express.urlencoded({ extended: true }));
 
 // Request parsers
 app.use(express.json({
